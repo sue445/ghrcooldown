@@ -1,6 +1,7 @@
 package ghrcooldown
 
 import (
+	"context"
 	"net/http"
 	"time"
 
@@ -39,4 +40,10 @@ func NewClient(params *ClientParams) (*Client, error) {
 	}
 
 	return &Client{client: client, currentTime: params.CurrentTime}, nil
+}
+
+// GetLatestVersion retrieves the latest release version of the specified repository, respecting the provided cooldown period.
+func (c *Client) GetLatestVersion(ctx context.Context, owner string, repo string, cooldown time.Duration) (string, error) {
+	// TODO: Impl
+	return "", nil
 }
