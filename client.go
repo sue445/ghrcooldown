@@ -2,7 +2,7 @@ package ghrcooldown
 
 import (
 	"context"
-	"net/http"
+	"fmt"
 	"time"
 
 	"github.com/cockroachdb/errors"
@@ -20,12 +20,11 @@ type ClientParams struct {
 	Token       string
 	BaseURL     string
 	CurrentTime *time.Time
-	HTTPClient  *http.Client
 }
 
 // NewClient creates and returns a new Client instance using the provided parameters.
 func NewClient(params *ClientParams) (*Client, error) {
-	client := github.NewClient(params.HTTPClient)
+	client := github.NewClient(nil)
 
 	if params.Token != "" {
 		client = client.WithAuthToken(params.Token)
@@ -42,8 +41,46 @@ func NewClient(params *ClientParams) (*Client, error) {
 	return &Client{client: client, currentTime: params.CurrentTime}, nil
 }
 
-// GetLatestVersion retrieves the latest release version of the specified repository, respecting the provided cooldown period.
-func (c *Client) GetLatestVersion(ctx context.Context, owner string, repo string, cooldown time.Duration) (string, error) {
-	// TODO: Impl
-	return "", nil
+// GetLatestTagName retrieves the latest release version of the specified repository, respecting the provided cooldown period.
+func (c *Client) GetLatestTagName(ctx context.Context, owner string, repo string, cooldown time.Duration) (string, error) {
+	currentTime := time.Now()
+	if c.currentTime != nil {
+		currentTime = *c.currentTime
+	}
+
+	opt := &github.ListOptions{
+		PerPage: 10,
+	}
+
+	for {
+		releases, resp, err := c.client.Repositories.ListReleases(ctx, owner, repo, opt)
+		if err != nil {
+			return "", errors.WithStack(err)
+		}
+
+		for _, release := range releases {
+			if release.GetDraft() || release.GetPrerelease() {
+				continue
+			}
+
+			ts := release.GetPublishedAt()
+			if ts.IsZero() {
+				continue
+			}
+
+			publishedAt := ts.Time
+
+			if currentTime.Sub(publishedAt) >= cooldown {
+				return release.GetTagName(), nil
+			}
+		}
+
+		if resp.NextPage == 0 {
+			break
+		}
+
+		opt.Page = resp.NextPage
+	}
+
+	return "", fmt.Errorf("no release found that respects the cooldown period of %v", cooldown)
 }

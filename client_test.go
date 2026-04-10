@@ -1,0 +1,67 @@
+package ghrcooldown_test
+
+import (
+	"testing"
+	"time"
+
+	"github.com/jarcoal/httpmock"
+	"github.com/stretchr/testify/assert"
+	"github.com/sue445/ghrcooldown"
+)
+
+func TestClient_GetLatestTagName(t *testing.T) {
+	httpmock.Activate(t)
+	httpmock.RegisterResponder(
+		"GET",
+		"https://api.github.com/repos/hashicorp/terraform/releases?per_page=10",
+		httpmock.NewStringResponder(200, readTestData("testdata/terraform-releases.json")),
+	)
+
+	type args struct {
+		owner       string
+		repo        string
+		cooldown    time.Duration
+		currentTime *time.Time
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "cooldown 7 days",
+			args: args{
+				owner:       "hashicorp",
+				repo:        "terraform",
+				currentTime: new(time.Date(2026, 3, 26, 0, 0, 0, 0, time.UTC)),
+				cooldown:    days(7),
+			},
+			want: "v1.14.7",
+		},
+		{
+			name: "cooldown 0 days",
+			args: args{
+				owner:       "hashicorp",
+				repo:        "terraform",
+				currentTime: new(time.Date(2026, 3, 26, 0, 0, 0, 0, time.UTC)),
+				cooldown:    days(0),
+			},
+			want: "v1.14.8",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c, err := ghrcooldown.NewClient(&ghrcooldown.ClientParams{
+				Token:       "DUMMY",
+				CurrentTime: tt.args.currentTime,
+			})
+
+			if assert.NoError(t, err) {
+				got, err := c.GetLatestTagName(t.Context(), tt.args.owner, tt.args.repo, tt.args.cooldown)
+				if assert.NoError(t, err) {
+					assert.Equal(t, tt.want, got)
+				}
+			}
+		})
+	}
+}
