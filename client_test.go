@@ -16,12 +16,18 @@ func TestClient_GetLatestTagName(t *testing.T) {
 		"https://api.github.com/repos/hashicorp/terraform/releases?per_page=10",
 		httpmock.NewStringResponder(200, readTestData("testdata/terraform-releases.json")),
 	)
+	httpmock.RegisterResponder(
+		"GET",
+		"https://github.example.com/api/v3/repos/hashicorp/terraform/releases?per_page=10",
+		httpmock.NewStringResponder(200, readTestData("testdata/terraform-releases.json")),
+	)
 
 	type args struct {
 		owner       string
 		repo        string
 		cooldown    time.Duration
 		currentTime *time.Time
+		baseURL     string
 	}
 	tests := []struct {
 		name string
@@ -48,12 +54,24 @@ func TestClient_GetLatestTagName(t *testing.T) {
 			},
 			want: "v1.14.8",
 		},
+		{
+			name: "with BaseURL",
+			args: args{
+				owner:       "hashicorp",
+				repo:        "terraform",
+				currentTime: new(time.Date(2026, 3, 26, 0, 0, 0, 0, time.UTC)),
+				cooldown:    days(7),
+				baseURL:     "https://github.example.com/api/v3/",
+			},
+			want: "v1.14.7",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			c, err := ghrcooldown.NewClient(&ghrcooldown.ClientParams{
 				Token:       "DUMMY",
 				CurrentTime: tt.args.currentTime,
+				BaseURL:     tt.args.baseURL,
 			})
 
 			if assert.NoError(t, err) {
