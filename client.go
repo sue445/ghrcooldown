@@ -108,3 +108,24 @@ func (c *Client) GetLatestTagName(ctx context.Context, owner string, repo string
 func GetDefaultUserAgent() string {
 	return fmt.Sprintf("ghrcooldown/%s (+https://github.com/sue445/ghrcooldown)", Version)
 }
+
+// HasCooldownPassed checks if the specified tag has passed the given cooldown period.
+func (c *Client) HasCooldownPassed(ctx context.Context, owner string, repo string, cooldown time.Duration, tagName string) (bool, error) {
+	release, _, err := c.client.Repositories.GetReleaseByTag(ctx, owner, repo, tagName)
+	if err != nil {
+		return false, errors.WithStack(err)
+	}
+
+	ts := release.GetPublishedAt()
+
+	if ts.IsZero() {
+		return false, nil
+	}
+
+	now := time.Now()
+	if c.currentTime != nil {
+		now = *c.currentTime
+	}
+
+	return now.Sub(ts.Time) >= cooldown, nil
+}
