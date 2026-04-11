@@ -110,7 +110,7 @@ func GetDefaultUserAgent() string {
 }
 
 // HasCooldownPassed checks if the specified tag has passed the given cooldown period.
-func (c *Client) HasCooldownPassed(ctx context.Context, owner string, repo string, cooldown time.Duration, tagName string) (bool, error) {
+func (c *Client) HasCooldownPassed(ctx context.Context, owner string, repo string, tagName string, cooldown time.Duration) (bool, error) {
 	release, _, err := c.client.Repositories.GetReleaseByTag(ctx, owner, repo, tagName)
 	if err != nil {
 		return false, errors.WithStack(err)
