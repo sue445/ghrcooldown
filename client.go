@@ -17,8 +17,17 @@ type Client struct {
 
 // ClientParams contains the configuration parameters required to initialize a new Client.
 type ClientParams struct {
-	Token       string
-	BaseURL     string
+	// Token is the personal access token used for authenticating with the GitHub API.
+	// It is optional, but if omitted, the API request will be subject to IP-based rate limiting.
+	// c.f. https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api
+	Token string
+
+	// BaseURL specifies the custom base URL for the GitHub API.
+	// It is primarily used for GitHub Enterprise Server.
+	BaseURL string
+
+	// CurrentTime is the reference time used to evaluate the cooldown period.
+	// It is mainly used for mocking the current time in unit tests.
 	CurrentTime *time.Time
 }
 
