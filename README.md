@@ -1,6 +1,7 @@
 # ghrcooldown
 A Go library to fetch the latest GitHub release respecting the cooldown period.
 
+[![Latest Version](https://img.shields.io/github/v/tag/sue445/ghrcooldown)](https://github.com/sue445/ghrcooldown/tags)
 [![test](https://github.com/sue445/ghrcooldown/actions/workflows/test.yml/badge.svg)](https://github.com/sue445/ghrcooldown/actions/workflows/test.yml)
 [![Maintainability](https://qlty.sh/badges/bf40eb29-6803-4e4f-a75e-10e3ae7ecb66/maintainability.svg)](https://qlty.sh/gh/sue445/projects/ghrcooldown)
 [![Coverage Status](https://coveralls.io/repos/github/sue445/ghrcooldown/badge.svg)](https://coveralls.io/github/sue445/ghrcooldown)
