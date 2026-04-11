@@ -137,7 +137,7 @@ func TestClient_HasCooldownPassed(t *testing.T) {
 			})
 
 			if assert.NoError(t, err) {
-				got, err := c.HasCooldownPassed(t.Context(), tt.args.owner, tt.args.repo, tt.args.cooldown, tt.args.tagName)
+				got, err := c.HasCooldownPassed(t.Context(), tt.args.owner, tt.args.repo, tt.args.tagName, tt.args.cooldown)
 				if assert.NoError(t, err) {
 					assert.Equal(t, tt.want, got)
 				}
