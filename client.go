@@ -26,6 +26,10 @@ type ClientParams struct {
 	// It is primarily used for GitHub Enterprise Server.
 	BaseURL string
 
+	// UserAgent specifies the User-Agent header used in API requests.
+	// If omitted, a default User-Agent will be used.
+	UserAgent string
+
 	// CurrentTime is the reference time used to evaluate the cooldown period.
 	// It is mainly used for mocking the current time in unit tests.
 	CurrentTime *time.Time
@@ -34,6 +38,12 @@ type ClientParams struct {
 // NewClient creates and returns a new Client instance using the provided parameters.
 func NewClient(params *ClientParams) (*Client, error) {
 	client := github.NewClient(nil)
+
+	if params.UserAgent == "" {
+		client.UserAgent = GetDefaultUserAgent()
+	} else {
+		client.UserAgent = params.UserAgent
+	}
 
 	if params.Token != "" {
 		client = client.WithAuthToken(params.Token)
@@ -92,4 +102,9 @@ func (c *Client) GetLatestTagName(ctx context.Context, owner string, repo string
 	}
 
 	return "", fmt.Errorf("no release found that respects the cooldown period of %v", cooldown)
+}
+
+// GetDefaultUserAgent returns the default User-Agent.
+func GetDefaultUserAgent() string {
+	return fmt.Sprintf("ghrcooldown/%s (+https://github.com/sue445/ghrcooldown)", Version)
 }
