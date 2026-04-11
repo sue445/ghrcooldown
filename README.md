@@ -8,6 +8,11 @@ A Go library to fetch the latest GitHub release respecting the cooldown period.
 [![GoDoc](https://godoc.org/github.com/sue445/ghrcooldown?status.svg)](https://godoc.org/github.com/sue445/ghrcooldown)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sue445/ghrcooldown)](https://goreportcard.com/report/github.com/sue445/ghrcooldown)
 
+## Install
+```bash
+go get -u github.com/sue445/ghrcooldown
+```
+
 ## Example
 
 ```go
