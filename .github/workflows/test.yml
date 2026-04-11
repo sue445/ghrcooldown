@@ -42,14 +42,13 @@ jobs:
           make test
           make testrace
 
-      # TODO: Do after
-      # - name: Coveralls
-      #   uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e # v2.3.7
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: coverage.out
-      #     format: golang
-      #   continue-on-error: true
+      - name: Coveralls
+        uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e # v2.3.7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: coverage.out
+          format: golang
+        continue-on-error: true
 
       - name: Slack Notification (not success)
         uses: act10ns/slack@d96404edccc6d6467fc7f8134a420c851b1e9054 # v2.2.0

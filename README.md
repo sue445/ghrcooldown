@@ -2,6 +2,7 @@
 A Go library to fetch the latest GitHub release respecting the cooldown period.
 
 [![test](https://github.com/sue445/ghrcooldown/actions/workflows/test.yml/badge.svg)](https://github.com/sue445/ghrcooldown/actions/workflows/test.yml)
+[![Coverage Status](https://coveralls.io/repos/github/sue445/ghrcooldown/badge.svg)](https://coveralls.io/github/sue445/ghrcooldown)
 
 ## Example
 
