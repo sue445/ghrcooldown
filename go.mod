@@ -5,7 +5,8 @@ go 1.26.0
 require (
 	github.com/cockroachdb/errors v1.12.0
 	github.com/google/go-github/v84 v84.0.0
-	github.com/stretchr/testify v1.8.4
+	github.com/jarcoal/httpmock v1.4.1
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
@@ -15,7 +16,6 @@ require (
 	github.com/getsentry/sentry-go v0.45.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/google/go-querystring v1.2.0 // indirect
-	github.com/jarcoal/httpmock v1.4.1 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
