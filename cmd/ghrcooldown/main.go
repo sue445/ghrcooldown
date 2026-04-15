@@ -18,10 +18,55 @@ var (
 )
 
 func main() {
+	var githubApiURL string
+	var githubToken string
+	var githubRepository string
+	var cooldownDays int64
+
+	commonFlags := []cli.Flag{
+		&cli.StringFlag{
+			Name:        "github-api-url",
+			Usage:       "GitHub API Endpoint (e.g. https://<your-ghes-hostname>/api/v3)",
+			Sources:     cli.EnvVars("GITHUB_API_URL"),
+			Required:    false,
+			Destination: &githubApiURL,
+		},
+		&cli.StringFlag{
+			Name:        "token",
+			Usage:       "GitHub token",
+			Sources:     cli.EnvVars("GITHUB_TOKEN"),
+			Required:    false,
+			Destination: &githubToken,
+		},
+		&cli.StringFlag{
+			Name:        "repo",
+			Usage:       "GitHub Repository Path (e.g. user/repo)",
+			Required:    true,
+			Destination: &githubRepository,
+		},
+		&cli.Int64Flag{
+			Name:        "cooldown-days",
+			Usage:       "Cooldown days",
+			Required:    false,
+			Destination: &cooldownDays,
+			Value:       0,
+		},
+	}
+
 	cmd := &cli.Command{
 		Name:    "ghrcooldown",
 		Version: fmt.Sprintf("%s (build. %s)", ghrcooldown.Version, Revision),
-		Usage:   "Fetch the latest GitHub Releases respecting the cooldown period.",
+		Usage:   "Get the latest GitHub Releases respecting the cooldown period.",
+		Commands: []*cli.Command{
+			{
+				Name:  "latest",
+				Usage: "Print latest release version of the specified repository, respecting the provided cooldown period.",
+				Flags: commonFlags,
+				Action: func(ctx context.Context, _ *cli.Command) error {
+					return nil
+				},
+			},
+		},
 	}
 
 	// Sort commands
