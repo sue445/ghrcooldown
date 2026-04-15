@@ -70,7 +70,12 @@ func main() {
 				Usage: "Print latest release version of the specified repository, respecting the provided cooldown period.",
 				Flags: commonFlags,
 				Action: func(ctx context.Context, _ *cli.Command) error {
-					return nil
+					return CommandLatest(ctx, &CommandLatestParams{
+						GithubApiURL:     githubApiURL,
+						GithubToken:      githubToken,
+						GithubRepository: githubRepository,
+						CooldownDays:     cooldownDays,
+					})
 				},
 			},
 		},
