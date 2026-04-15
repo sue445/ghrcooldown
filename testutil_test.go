@@ -2,7 +2,6 @@ package ghrcooldown_test
 
 import (
 	"os"
-	"time"
 )
 
 // readTestData returns testdata
@@ -14,8 +13,4 @@ func readTestData(filename string) string {
 	}
 
 	return string(buf)
-}
-
-func days(days int) time.Duration {
-	return time.Duration(days) * 24 * time.Hour
 }
