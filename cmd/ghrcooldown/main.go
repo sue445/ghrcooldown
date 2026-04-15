@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"sort"
+	"strings"
 
 	"github.com/cockroachdb/errors"
 	"github.com/sue445/ghrcooldown"
@@ -16,6 +17,12 @@ var (
 	// Revision represents app revision (injected from ldflags)
 	Revision string
 )
+
+// RepositoryPath represents GitHub repository's owner and repo
+type RepositoryPath struct {
+	Owner string
+	Repo  string
+}
 
 func main() {
 	var githubApiURL string
@@ -83,4 +90,17 @@ func main() {
 	if err != nil {
 		log.Fatal(errors.WithStack(err))
 	}
+}
+
+// ParseRepositoryPath parses a GitHub repository path string (e.g., "owner/repo") and returns a [RepositoryPath]. It returns an error if the format is invalid.
+func ParseRepositoryPath(path string) (*RepositoryPath, error) {
+	parts := strings.Split(path, "/")
+	if len(parts) != 2 {
+		return nil, errors.Errorf("invalid repository path: %s", path)
+	}
+
+	return &RepositoryPath{
+		Owner: parts[0],
+		Repo:  parts[1],
+	}, nil
 }
