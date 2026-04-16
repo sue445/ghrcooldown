@@ -31,23 +31,32 @@ func captureStdout(t *testing.T, fn func()) string {
 	r, w, err := os.Pipe()
 	require.NoError(t, err)
 
-	os.Stdout = w
-
-	fn()
-
-	err = w.Close()
-	require.NoError(t, err)
-
-	os.Stdout = orgStdout
-
-	var buf bytes.Buffer
-	_, err = io.Copy(&buf, r)
-	require.NoError(t, err)
-
 	defer func() {
 		err := r.Close()
 		require.NoError(t, err)
 	}()
 
+	var buf bytes.Buffer
+	copyErrCh := make(chan error, 1)
+	go func() {
+		_, err := io.Copy(&buf, r)
+		copyErrCh <- err
+	}()
+
+	os.Stdout = w
+	defer func() {
+		os.Stdout = orgStdout
+		err := w.Close()
+		require.NoError(t, err)
+	}()
+
+	fn()
+
+	os.Stdout = orgStdout
+	err = w.Close()
+	require.NoError(t, err)
+
+	err = <-copyErrCh
+	require.NoError(t, err)
 	return buf.String()
 }
