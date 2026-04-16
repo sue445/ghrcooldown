@@ -1,20 +1,19 @@
-package main_test
+package main
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	main "github.com/sue445/ghrcooldown/cmd/ghrcooldown"
 )
 
-func TestParseRepositoryPath_Success(t *testing.T) {
+func Test_parseRepositoryPath_Success(t *testing.T) {
 	tests := []struct {
 		path string
-		want *main.RepositoryPath
+		want *repositoryPath
 	}{
 		{
 			path: "user/repo",
-			want: &main.RepositoryPath{
+			want: &repositoryPath{
 				Owner: "user",
 				Repo:  "repo",
 			},
@@ -22,7 +21,7 @@ func TestParseRepositoryPath_Success(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.path, func(t *testing.T) {
-			got, err := main.ParseRepositoryPath(tt.path)
+			got, err := parseRepositoryPath(tt.path)
 			if assert.NoError(t, err) {
 				assert.Equal(t, tt.want, got)
 			}
@@ -30,7 +29,7 @@ func TestParseRepositoryPath_Success(t *testing.T) {
 	}
 }
 
-func TestParseRepositoryPath_Error(t *testing.T) {
+func Test_parseRepositoryPath_Error(t *testing.T) {
 	tests := []struct {
 		path string
 	}{
@@ -40,7 +39,7 @@ func TestParseRepositoryPath_Error(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.path, func(t *testing.T) {
-			_, err := main.ParseRepositoryPath(tt.path)
+			_, err := parseRepositoryPath(tt.path)
 			assert.Error(t, err)
 		})
 	}

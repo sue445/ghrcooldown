@@ -18,8 +18,8 @@ var (
 	Revision string
 )
 
-// RepositoryPath represents GitHub repository's owner and repo
-type RepositoryPath struct {
+// repositoryPath represents GitHub repository's owner and repo
+type repositoryPath struct {
 	Owner string
 	Repo  string
 }
@@ -70,11 +70,11 @@ func main() {
 				Usage: "Print latest release version of the specified repository, respecting the provided cooldown period.",
 				Flags: commonFlags,
 				Action: func(ctx context.Context, _ *cli.Command) error {
-					return CommandLatest(ctx, &CommandLatestParams{
-						GithubApiURL:     githubApiURL,
-						GithubToken:      githubToken,
-						GithubRepository: githubRepository,
-						CooldownDays:     cooldownDays,
+					return commandLatest(ctx, &commandLatestParams{
+						githubApiURL:     githubApiURL,
+						githubToken:      githubToken,
+						githubRepository: githubRepository,
+						cooldownDays:     cooldownDays,
 					})
 				},
 			},
@@ -97,8 +97,8 @@ func main() {
 	}
 }
 
-// ParseRepositoryPath parses a GitHub repository path string (e.g., "owner/repo") and returns a [RepositoryPath]. It returns an error if the format is invalid.
-func ParseRepositoryPath(path string) (*RepositoryPath, error) {
+// parseRepositoryPath parses a GitHub repository path string (e.g., "owner/repo") and returns a [repositoryPath]. It returns an error if the format is invalid.
+func parseRepositoryPath(path string) (*repositoryPath, error) {
 	path = strings.TrimSpace(path)
 	parts := strings.Split(path, "/")
 	if len(parts) != 2 {
@@ -111,7 +111,7 @@ func ParseRepositoryPath(path string) (*RepositoryPath, error) {
 		return nil, errors.Errorf("invalid repository path: %s", path)
 	}
 
-	return &RepositoryPath{
+	return &repositoryPath{
 		Owner: owner,
 		Repo:  repo,
 	}, nil

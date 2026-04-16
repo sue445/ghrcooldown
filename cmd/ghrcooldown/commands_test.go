@@ -1,4 +1,4 @@
-package main_test
+package main
 
 import (
 	"testing"
@@ -6,10 +6,9 @@ import (
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	main "github.com/sue445/ghrcooldown/cmd/ghrcooldown"
 )
 
-func TestCommandLatest(t *testing.T) {
+func Test_commandLatest(t *testing.T) {
 	httpmock.Activate(t)
 	httpmock.RegisterResponder(
 		"GET",
@@ -18,10 +17,10 @@ func TestCommandLatest(t *testing.T) {
 	)
 
 	got := captureStdout(t, func() {
-		err := main.CommandLatest(t.Context(), &main.CommandLatestParams{
-			GithubToken:      "DUMMY",
-			GithubRepository: "hashicorp/terraform",
-			CooldownDays:     0,
+		err := commandLatest(t.Context(), &commandLatestParams{
+			githubToken:      "DUMMY",
+			githubRepository: "hashicorp/terraform",
+			cooldownDays:     0,
 		})
 		require.NoError(t, err)
 	})

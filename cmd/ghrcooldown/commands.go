@@ -9,32 +9,32 @@ import (
 	"github.com/sue445/ghrcooldown"
 )
 
-type CommandLatestParams struct {
-	GithubApiURL     string
-	GithubToken      string
-	GithubRepository string
-	CooldownDays     int64
+type commandLatestParams struct {
+	githubApiURL     string
+	githubToken      string
+	githubRepository string
+	cooldownDays     int64
 }
 
-func CommandLatest(ctx context.Context, params *CommandLatestParams) error {
-	if params.CooldownDays < 0 {
-		params.CooldownDays = 0
+func commandLatest(ctx context.Context, params *commandLatestParams) error {
+	if params.cooldownDays < 0 {
+		params.cooldownDays = 0
 	}
 
 	client, err := ghrcooldown.NewClient(&ghrcooldown.ClientParams{
-		Token:   params.GithubToken,
-		BaseURL: params.GithubApiURL,
+		Token:   params.githubToken,
+		BaseURL: params.githubApiURL,
 	})
 	if err != nil {
 		return errors.WithStack(err)
 	}
 
-	repositoryPath, err := ParseRepositoryPath(params.GithubRepository)
+	repositoryPath, err := parseRepositoryPath(params.githubRepository)
 	if err != nil {
 		return errors.WithStack(err)
 	}
 
-	tagName, err := client.GetLatestTagName(ctx, repositoryPath.Owner, repositoryPath.Repo, time.Duration(params.CooldownDays)*ghrcooldown.Day)
+	tagName, err := client.GetLatestTagName(ctx, repositoryPath.Owner, repositoryPath.Repo, time.Duration(params.cooldownDays)*ghrcooldown.Day)
 	if err != nil {
 		return errors.WithStack(err)
 	}
