@@ -16,11 +16,6 @@ func TestCommandLatest(t *testing.T) {
 		"https://api.github.com/repos/hashicorp/terraform/releases?per_page=10",
 		httpmock.NewStringResponder(200, readTestData("../../testdata/terraform-releases.json")),
 	)
-	httpmock.RegisterResponder(
-		"GET",
-		"https://github.example.com/api/v3/repos/hashicorp/terraform/releases?per_page=10",
-		httpmock.NewStringResponder(200, readTestData("../../testdata/terraform-releases.json")),
-	)
 
 	got := captureStdout(t, func() {
 		err := main.CommandLatest(t.Context(), &main.CommandLatestParams{
