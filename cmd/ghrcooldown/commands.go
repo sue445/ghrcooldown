@@ -17,6 +17,10 @@ type CommandLatestParams struct {
 }
 
 func CommandLatest(ctx context.Context, params *CommandLatestParams) error {
+	if params.CooldownDays < 0 {
+		params.CooldownDays = 0
+	}
+
 	client, err := ghrcooldown.NewClient(&ghrcooldown.ClientParams{
 		Token:   params.GithubToken,
 		BaseURL: params.GithubApiURL,
