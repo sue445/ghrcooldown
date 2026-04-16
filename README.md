@@ -15,7 +15,9 @@ v1.14.8
 ```
 
 ### Install
-TBD
+```bash
+go install github.com/sue445/ghrcooldown/cmd/ghrcooldown@latest
+```
 
 ### Commands
 #### `ghrcooldown latest`
