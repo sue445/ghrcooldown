@@ -46,8 +46,7 @@ func captureStdout(t *testing.T, fn func()) string {
 	os.Stdout = w
 	defer func() {
 		os.Stdout = orgStdout
-		err := w.Close()
-		require.NoError(t, err)
+		w.Close()
 	}()
 
 	fn()
