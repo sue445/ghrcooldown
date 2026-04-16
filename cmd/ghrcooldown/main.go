@@ -33,7 +33,7 @@ func main() {
 	commonFlags := []cli.Flag{
 		&cli.StringFlag{
 			Name:        "github-api-url",
-			Usage:       "GitHub API Endpoint (e.g. https://<your-ghes-hostname>/api/v3)",
+			Usage:       "GitHub API Endpoint (e.g. https://<your-ghes-hostname>/api/v3). Required if using GitHub Enterprise Server",
 			Sources:     cli.EnvVars("GITHUB_API_URL"),
 			Required:    false,
 			Destination: &githubApiURL,

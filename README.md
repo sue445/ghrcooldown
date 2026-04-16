@@ -29,7 +29,7 @@ USAGE:
 
 OPTIONS:
    --cooldown-days int      Cooldown days (default: 0)
-   --github-api-url string  GitHub API Endpoint (e.g. https://<your-ghes-hostname>/api/v3) [$GITHUB_API_URL]
+   --github-api-url string  GitHub API Endpoint (e.g. https://<your-ghes-hostname>/api/v3). Required if using GitHub Enterprise Server [$GITHUB_API_URL]
    --repo string            GitHub Repository Path (e.g. user/repo)
    --token string           GitHub token [$GITHUB_TOKEN]
    --help, -h               show help
