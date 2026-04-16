@@ -35,13 +35,19 @@ func captureStdout(t *testing.T, fn func()) string {
 
 	fn()
 
-	w.Close()
+	err = w.Close()
+	require.NoError(t, err)
 
 	os.Stdout = orgStdout
 
 	var buf bytes.Buffer
 	_, err = io.Copy(&buf, r)
 	require.NoError(t, err)
+
+	defer func() {
+		err := r.Close()
+		require.NoError(t, err)
+	}()
 
 	return buf.String()
 }
