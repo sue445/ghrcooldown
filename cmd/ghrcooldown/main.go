@@ -93,19 +93,26 @@ func main() {
 
 	err := cmd.Run(context.Background(), os.Args)
 	if err != nil {
-		log.Fatal(errors.WithStack(err))
+		log.Fatalf("%+v", errors.WithStack(err))
 	}
 }
 
 // ParseRepositoryPath parses a GitHub repository path string (e.g., "owner/repo") and returns a [RepositoryPath]. It returns an error if the format is invalid.
 func ParseRepositoryPath(path string) (*RepositoryPath, error) {
+	path = strings.TrimSpace(path)
 	parts := strings.Split(path, "/")
 	if len(parts) != 2 {
 		return nil, errors.Errorf("invalid repository path: %s", path)
 	}
 
+	owner := strings.TrimSpace(parts[0])
+	repo := strings.TrimSpace(parts[1])
+	if owner == "" || repo == "" {
+		return nil, errors.Errorf("invalid repository path: %s", path)
+	}
+
 	return &RepositoryPath{
-		Owner: parts[0],
-		Repo:  parts[1],
+		Owner: owner,
+		Repo:  repo,
 	}, nil
 }

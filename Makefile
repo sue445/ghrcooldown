@@ -8,7 +8,7 @@ LDFLAGS := "-s -w -X \"main.Revision=$(REVISION)\""
 .DEFAULT_GOAL := bin/$(NAME)
 
 bin/$(NAME): $(SRCS)
-	go build -ldflags=$(LDFLAGS) -o bin/$(NAME) ./cmd/$(NAME)/*.go
+	go build -ldflags=$(LDFLAGS) -o bin/$(NAME) ./cmd/$(NAME)
 
 .PHONY: clean
 clean:
