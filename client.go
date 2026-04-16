@@ -9,6 +9,9 @@ import (
 	"github.com/google/go-github/v84/github"
 )
 
+// Day represents the duration of exactly 24 hours.
+const Day = 24 * time.Hour
+
 // Client represents a client for interacting with the GitHub API with cooldown support.
 type Client struct {
 	client      *github.Client

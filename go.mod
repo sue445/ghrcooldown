@@ -7,6 +7,7 @@ require (
 	github.com/google/go-github/v84 v84.0.0
 	github.com/jarcoal/httpmock v1.4.1
 	github.com/stretchr/testify v1.11.1
+	github.com/urfave/cli/v3 v3.8.0
 )
 
 require (

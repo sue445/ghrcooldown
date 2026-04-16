@@ -1,5 +1,5 @@
 # ghrcooldown
-A Go library to fetch the latest GitHub Releases respecting the cooldown period.
+A CLI tool and Go library to fetch the latest GitHub Releases respecting the cooldown period.
 
 [![Latest Version](https://img.shields.io/github/v/tag/sue445/ghrcooldown)](https://github.com/sue445/ghrcooldown/tags)
 [![test](https://github.com/sue445/ghrcooldown/actions/workflows/test.yml/badge.svg)](https://github.com/sue445/ghrcooldown/actions/workflows/test.yml)
@@ -8,12 +8,43 @@ A Go library to fetch the latest GitHub Releases respecting the cooldown period.
 [![GoDoc](https://godoc.org/github.com/sue445/ghrcooldown?status.svg)](https://godoc.org/github.com/sue445/ghrcooldown)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sue445/ghrcooldown)](https://goreportcard.com/report/github.com/sue445/ghrcooldown)
 
-## Install
+## Usage as a CLI tool
+```bash
+$ ghrcooldown latest --repo hashicorp/terraform --cooldown-days 7
+v1.14.8
+```
+
+### Install
+```bash
+go install github.com/sue445/ghrcooldown/cmd/ghrcooldown@latest
+```
+
+### Commands
+#### `ghrcooldown latest`
+```
+$ ghrcooldown latest --help
+NAME:
+   ghrcooldown latest - Print latest release version of the specified repository, respecting the provided cooldown period.
+
+USAGE:
+   ghrcooldown latest [options]
+
+OPTIONS:
+   --cooldown-days int      Cooldown days (default: 0)
+   --github-api-url string  GitHub API Endpoint (e.g. https://<your-ghes-hostname>/api/v3). Required if using GitHub Enterprise Server [$GITHUB_API_URL]
+   --repo string            GitHub Repository Path (e.g. user/repo)
+   --token string           GitHub token [$GITHUB_TOKEN]
+   --help, -h               show help
+```
+
+## Usage as a library
+
+### Install
 ```bash
 go get -u github.com/sue445/ghrcooldown
 ```
 
-## Example
+### Example
 
 ```go
 package main

@@ -1,17 +1,26 @@
+NAME     := ghrcooldown
 VERSION  := $(shell cat version.go | grep 'Version = ' | sed -E 's/^.*Version = "(.+)".*/\1/g')
+REVISION := $(shell git rev-parse --short HEAD)
 
-.DEFAULT_GOAL := test
+SRCS    := $(shell find . -type f -name '*.go')
+LDFLAGS := "-s -w -X \"main.Revision=$(REVISION)\""
+
+.DEFAULT_GOAL := bin/$(NAME)
 
 bin/$(NAME): $(SRCS)
-	go build -o bin/$(NAME)
+	go build -ldflags=$(LDFLAGS) -o bin/$(NAME) ./cmd/$(NAME)
+
+.PHONY: clean
+clean:
+	rm -rf bin/*
 
 .PHONY: test
 test:
-	go test -count=1 $${TEST_ARGS}
+	go test -count=1 $${TEST_ARGS} ./...
 
 .PHONY: testrace
 testrace:
-	go test -count=1 $${TEST_ARGS} -race
+	go test -count=1 $${TEST_ARGS} -race  ./...
 
 .PHONY: fmt
 fmt:
