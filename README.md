@@ -18,6 +18,10 @@ Cooldown has passed.
 ```
 
 ### Install
+Download latest binary from https://github.com/sue445/ghrcooldown/releases
+
+or
+
 ```bash
 go install github.com/sue445/ghrcooldown/cmd/ghrcooldown@latest
 ```
