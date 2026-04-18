@@ -39,13 +39,13 @@ func Test_commandHasPassed(t *testing.T) {
 
 	tests := []struct {
 		name       string
-		params     *commandHassPassedParams
+		params     *commandHasPassedParams
 		wantErr    bool
 		wantStdout string
 	}{
 		{
 			name: "cooldown has passed without --exit-code",
-			params: &commandHassPassedParams{
+			params: &commandHasPassedParams{
 				githubToken:      "DUMMY",
 				githubRepository: "hashicorp/terraform",
 				githubTagName:    "v1.14.8",
@@ -57,7 +57,7 @@ func Test_commandHasPassed(t *testing.T) {
 		},
 		{
 			name: "cooldown has not passed without --exit-code",
-			params: &commandHassPassedParams{
+			params: &commandHasPassedParams{
 				githubToken:      "DUMMY",
 				githubRepository: "hashicorp/terraform",
 				githubTagName:    "v1.14.8",
@@ -69,7 +69,7 @@ func Test_commandHasPassed(t *testing.T) {
 		},
 		{
 			name: "cooldown has passed with --exit-code",
-			params: &commandHassPassedParams{
+			params: &commandHasPassedParams{
 				githubToken:      "DUMMY",
 				githubRepository: "hashicorp/terraform",
 				githubTagName:    "v1.14.8",
@@ -80,7 +80,7 @@ func Test_commandHasPassed(t *testing.T) {
 		},
 		{
 			name: "cooldown has not passed with --exit-code",
-			params: &commandHassPassedParams{
+			params: &commandHasPassedParams{
 				githubToken:      "DUMMY",
 				githubRepository: "hashicorp/terraform",
 				githubTagName:    "v1.14.8",

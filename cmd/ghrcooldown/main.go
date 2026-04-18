@@ -101,7 +101,7 @@ func main() {
 					},
 				),
 				Action: func(ctx context.Context, _ *cli.Command) error {
-					return commandHasPassed(ctx, &commandHassPassedParams{
+					return commandHasPassed(ctx, &commandHasPassedParams{
 						githubApiURL:     githubApiURL,
 						githubToken:      githubToken,
 						githubRepository: githubRepository,

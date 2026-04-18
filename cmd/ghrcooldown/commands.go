@@ -47,7 +47,7 @@ func commandLatest(ctx context.Context, params *commandLatestParams) error {
 	return nil
 }
 
-type commandHassPassedParams struct {
+type commandHasPassedParams struct {
 	githubApiURL     string
 	githubToken      string
 	githubRepository string
@@ -57,7 +57,7 @@ type commandHassPassedParams struct {
 	currentTime      *time.Time
 }
 
-func commandHasPassed(ctx context.Context, params *commandHassPassedParams) error {
+func commandHasPassed(ctx context.Context, params *commandHasPassedParams) error {
 	if params.cooldownDays < 0 {
 		params.cooldownDays = 0
 	}
