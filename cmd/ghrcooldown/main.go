@@ -28,7 +28,9 @@ func main() {
 	var githubApiURL string
 	var githubToken string
 	var githubRepository string
+	var githubTag string
 	var cooldownDays int64
+	var isExitCode bool
 
 	commonFlags := []cli.Flag{
 		&cli.StringFlag{
@@ -78,6 +80,37 @@ func main() {
 					})
 				},
 			},
+			{
+				Name:  "has-passed",
+				Usage: "Checks whether the specified tag has passed the given cooldown period.",
+				Flags: append(
+					commonFlags,
+					&cli.StringFlag{
+						Name:        "tag",
+						Usage:       "GitHub tag",
+						Required:    true,
+						Destination: &githubTag,
+					},
+					&cli.BoolFlag{
+						Name:        "exit-code",
+						Usage:       "Exit with code 1 if the cooldown has not passed",
+						Required:    false,
+						Destination: &isExitCode,
+						DefaultText: "false",
+						Value:       false,
+					},
+				),
+				Action: func(ctx context.Context, _ *cli.Command) error {
+					return commandHasPassed(ctx, &commandHasPassedParams{
+						githubApiURL:     githubApiURL,
+						githubToken:      githubToken,
+						githubRepository: githubRepository,
+						githubTagName:    githubTag,
+						cooldownDays:     cooldownDays,
+						isExitCode:       isExitCode,
+					})
+				},
+			},
 		},
 	}
 
@@ -93,6 +126,14 @@ func main() {
 
 	err := cmd.Run(context.Background(), os.Args)
 	if err != nil {
+		var exitErr cli.ExitCoder
+		if errors.As(err, &exitErr) {
+			if msg := exitErr.Error(); msg != "" && msg != "exit status 1" {
+				fmt.Fprintln(os.Stderr, msg)
+			}
+			os.Exit(exitErr.ExitCode())
+		}
+
 		log.Fatalf("%+v", errors.WithStack(err))
 	}
 }
