@@ -126,6 +126,14 @@ func main() {
 
 	err := cmd.Run(context.Background(), os.Args)
 	if err != nil {
+		var exitErr cli.ExitCoder
+		if errors.As(err, &exitErr) {
+			if msg := exitErr.Error(); msg != "" && msg != "exit status 1" {
+				fmt.Fprintln(os.Stderr, msg)
+			}
+			os.Exit(exitErr.ExitCode())
+		}
+
 		log.Fatalf("%+v", errors.WithStack(err))
 	}
 }
