@@ -17,7 +17,7 @@ builds:
       - darwin
     main: ./cmd/ghrcooldown/
     ldflags:
-      - -s -w -X main.Revision={{.ShortCommit}}
+      - -s -w -X "main.Revision={{.ShortCommit}}"
 
 archives:
   - formats: ['tar.gz']
