@@ -28,7 +28,9 @@ func main() {
 	var githubApiURL string
 	var githubToken string
 	var githubRepository string
+	var githubTag string
 	var cooldownDays int64
+	var isExitCode bool
 
 	commonFlags := []cli.Flag{
 		&cli.StringFlag{
@@ -76,6 +78,30 @@ func main() {
 						githubRepository: githubRepository,
 						cooldownDays:     cooldownDays,
 					})
+				},
+			},
+			{
+				Name:  "has-passed",
+				Usage: "Checks whether the specified tag has passed the given cooldown period.",
+				Flags: append(
+					commonFlags,
+					&cli.StringFlag{
+						Name:        "tag",
+						Usage:       "GitHub tag",
+						Required:    true,
+						Destination: &githubTag,
+					},
+					&cli.BoolFlag{
+						Name:        "exit-code",
+						Usage:       "Exit with code 1 if the cooldown has not passed",
+						Required:    false,
+						Destination: &isExitCode,
+						DefaultText: "false",
+						Value:       false,
+					},
+				),
+				Action: func(ctx context.Context, _ *cli.Command) error {
+					return nil
 				},
 			},
 		},
