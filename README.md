@@ -12,6 +12,9 @@ A CLI tool and Go library to fetch the latest GitHub Releases respecting the coo
 ```bash
 $ ghrcooldown latest --repo hashicorp/terraform --cooldown-days 7
 v1.14.8
+
+$ ghrcooldown has-passed --repo hashicorp/terraform --tag v1.14.8 --cooldown-days 7
+Cooldown has passed.
 ```
 
 ### Install
@@ -33,6 +36,25 @@ OPTIONS:
    --cooldown-days int      Cooldown days (default: 0)
    --github-api-url string  GitHub API Endpoint (e.g. https://<your-ghes-hostname>/api/v3). Required if using GitHub Enterprise Server [$GITHUB_API_URL]
    --repo string            GitHub Repository Path (e.g. user/repo)
+   --token string           GitHub token [$GITHUB_TOKEN]
+   --help, -h               show help
+```
+
+#### `ghrcooldown has-passed`
+```
+$ ./bin/ghrcooldown has-passed --help
+NAME:
+   ghrcooldown has-passed - Checks whether the specified tag has passed the given cooldown period.
+
+USAGE:
+   ghrcooldown has-passed [options]
+
+OPTIONS:
+   --cooldown-days int      Cooldown days (default: 0)
+   --exit-code              Exit with code 1 if the cooldown has not passed (default: false)
+   --github-api-url string  GitHub API Endpoint (e.g. https://<your-ghes-hostname>/api/v3). Required if using GitHub Enterprise Server [$GITHUB_API_URL]
+   --repo string            GitHub Repository Path (e.g. user/repo)
+   --tag string             GitHub tag
    --token string           GitHub token [$GITHUB_TOKEN]
    --help, -h               show help
 ```
