@@ -63,6 +63,14 @@ OPTIONS:
    --help, -h               show help
 ```
 
+#### About `--token`
+`--token` is the personal access token used for authenticating with the GitHub API.
+
+It is optional, but if omitted, the API request will be subject to IP-based rate limiting.
+
+c.f. https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api
+
+
 ## Usage as a library
 
 ### Install
