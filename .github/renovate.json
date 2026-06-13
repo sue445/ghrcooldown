@@ -5,6 +5,9 @@
   ],
   "minimumReleaseAge": "7 days",
   "enabledManagers": ["gomod"],
+  "assignees": [
+    "sue445"
+  ],
   "postUpdateOptions": [
     "gomodUpdateImportPaths",
     "gomodTidy"
