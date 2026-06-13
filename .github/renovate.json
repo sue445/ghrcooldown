@@ -9,10 +9,10 @@
   "packageRules": [
     {
       "description": "Disable all package updates except for go-github",
-      "excludePackagePatterns": [
-        "^github\\.com/google/go-github(/.*)?$"
-      ],
-      "enabled": false
+      "enabled": false,
+      "matchPackageNames": [
+        "!/^github\\.com/google/go-github(/.*)?$/"
+      ]
     }
   ]
 }
