@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices"
+  ],
+  "minimumReleaseAge": "7 days",
+  "enabledManagers": ["gomod"],
+  "postUpdateOptions": ["gomodTidy"],
+  "packageRules": [
+    {
+      "description": "Disable all package updates except for go-github",
+      "excludePackagePatterns": [
+        "^github\\.com/google/go-github(/.*)?$"
+      ],
+      "enabled": false
+    }
+  ]
+}
