@@ -5,7 +5,10 @@
   ],
   "minimumReleaseAge": "7 days",
   "enabledManagers": ["gomod"],
-  "postUpdateOptions": ["gomodTidy"],
+  "postUpdateOptions": [
+    "gomodUpdateImportPaths",
+    "gomodTidy"
+  ],
   "packageRules": [
     {
       "description": "Disable all package updates except for go-github",
