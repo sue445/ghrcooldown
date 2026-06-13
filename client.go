@@ -40,24 +40,25 @@ type ClientParams struct {
 
 // NewClient creates and returns a new Client instance using the provided parameters.
 func NewClient(params *ClientParams) (*Client, error) {
-	client := github.NewClient(nil)
-
 	if params.UserAgent == "" {
-		client.UserAgent = GetDefaultUserAgent()
-	} else {
-		client.UserAgent = params.UserAgent
+		params.UserAgent = GetDefaultUserAgent()
+	}
+
+	options := []github.ClientOptionsFunc{
+		github.WithUserAgent(params.UserAgent),
 	}
 
 	if params.Token != "" {
-		client = client.WithAuthToken(params.Token)
+		options = append(options, github.WithAuthToken(params.Token))
 	}
 
 	if params.BaseURL != "" {
-		var err error
-		client, err = client.WithEnterpriseURLs(params.BaseURL, "")
-		if err != nil {
-			return nil, errors.WithStack(err)
-		}
+		options = append(options, github.WithEnterpriseURLs(params.BaseURL, params.BaseURL))
+	}
+
+	client, err := github.NewClient(options...)
+	if err != nil {
+		return nil, errors.WithStack(err)
 	}
 
 	return &Client{client: client, currentTime: params.CurrentTime}, nil
