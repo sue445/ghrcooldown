@@ -6,7 +6,7 @@
   "minimumReleaseAge": "7 days",
   "timezone": "Asia/Tokyo",
   "schedule": [
-    "0 5 * * *"
+    "* 5 * * *"
   ],
   "enabledManagers": ["gomod"],
   "assignees": [
