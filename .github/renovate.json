@@ -4,6 +4,10 @@
     "config:best-practices"
   ],
   "minimumReleaseAge": "7 days",
+  "timezone": "Asia/Tokyo",
+  "schedule": [
+    "0 5 * * *"
+  ],
   "enabledManagers": ["gomod"],
   "assignees": [
     "sue445"
