@@ -8,6 +8,10 @@
   "assignees": [
     "sue445"
   ],
+  "labels": [
+    "dependencies",
+    "go"
+  ],
   "postUpdateOptions": [
     "gomodUpdateImportPaths",
     "gomodTidy"
