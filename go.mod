@@ -3,7 +3,7 @@ module github.com/sue445/ghrcooldown
 go 1.26.0
 
 require (
-	github.com/cockroachdb/errors v1.13.0
+	github.com/cockroachdb/errors v1.14.0
 	github.com/google/go-github/v88 v88.0.0
 	github.com/jarcoal/httpmock v1.4.1
 	github.com/stretchr/testify v1.11.1
