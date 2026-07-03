@@ -6,7 +6,6 @@ A CLI tool and Go library to fetch the latest GitHub Releases respecting the coo
 [![Maintainability](https://qlty.sh/badges/bf40eb29-6803-4e4f-a75e-10e3ae7ecb66/maintainability.svg)](https://qlty.sh/gh/sue445/projects/ghrcooldown)
 [![Coverage Status](https://coveralls.io/repos/github/sue445/ghrcooldown/badge.svg)](https://coveralls.io/github/sue445/ghrcooldown)
 [![GoDoc](https://godoc.org/github.com/sue445/ghrcooldown?status.svg)](https://godoc.org/github.com/sue445/ghrcooldown)
-[![Go Report Card](https://goreportcard.com/badge/github.com/sue445/ghrcooldown)](https://goreportcard.com/report/github.com/sue445/ghrcooldown)
 
 ## Usage as a CLI tool
 ```bash
