@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/cockroachdb/errors v1.14.0
-	github.com/google/go-github/v91 v91.0.0
+	github.com/google/go-github/v92 v92.0.0
 	github.com/jarcoal/httpmock v1.4.2
 	github.com/stretchr/testify v1.12.1
 	github.com/urfave/cli/v3 v3.12.0
