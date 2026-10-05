@@ -51,6 +51,7 @@ func main() {
 			Name:        "repo",
 			Usage:       "GitHub Repository Path (e.g. user/repo)",
 			Required:    true,
+			Action:      requireNonEmpty("repo"),
 			Destination: &githubRepository,
 		},
 		&cli.Int64Flag{
@@ -89,6 +90,7 @@ func main() {
 						Name:        "tag",
 						Usage:       "GitHub tag",
 						Required:    true,
+						Action:      requireNonEmpty("tag"),
 						Destination: &githubTag,
 					},
 					&cli.BoolFlag{
@@ -156,4 +158,14 @@ func parseRepositoryPath(path string) (*repositoryPath, error) {
 		Owner: owner,
 		Repo:  repo,
 	}, nil
+}
+
+func requireNonEmpty(flagName string) func(context.Context, *cli.Command, string) error {
+	return func(_ context.Context, _ *cli.Command, v string) error {
+		if v != "" {
+			return nil
+		}
+
+		return errors.Errorf("--%s must not be empty", flagName)
+	}
 }
