@@ -23,7 +23,8 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "minor"],
-      "automerge": true
+      "automerge": true,
+      "automergeStrategy": "merge-commit"
     },
     {
       "description": "Disable all package updates except for go-github",
